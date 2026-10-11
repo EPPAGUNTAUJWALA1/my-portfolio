@@ -1,0 +1,356 @@
+```javascript
+/* =========================================================
+   UJWALA PORTFOLIO - JAVASCRIPT
+   ========================================================= */
+
+
+/* ================= MOBILE MENU ================= */
+
+const menuBtn = document.querySelector(".menu-btn");
+
+const navbar = document.querySelector(".navbar");
+
+const navLinks = document.querySelectorAll("nav a");
+
+
+menuBtn.addEventListener("click", () => {
+
+    navbar.classList.toggle("open");
+
+});
+
+
+/* Close menu after clicking a link */
+
+navLinks.forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        navbar.classList.remove("open");
+
+    });
+
+});
+
+
+
+/* ================= SCROLL REVEAL ANIMATION ================= */
+
+const observer = new IntersectionObserver(
+
+    (entries) => {
+
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+                entry.target.classList.add("visible");
+
+            }
+
+        });
+
+    },
+
+    {
+        threshold: 0.12
+    }
+
+);
+
+
+/* Observe all elements with reveal class */
+
+document
+    .querySelectorAll(".reveal")
+    .forEach(element => {
+
+        observer.observe(element);
+
+    });
+
+
+
+/* ================= BACK TO TOP BUTTON ================= */
+
+const topBtn = document.getElementById("topBtn");
+
+
+window.addEventListener("scroll", () => {
+
+    if (window.scrollY > 500) {
+
+        topBtn.classList.add("show");
+
+    } else {
+
+        topBtn.classList.remove("show");
+
+    }
+
+});
+
+
+topBtn.addEventListener("click", () => {
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+});
+
+
+
+/* ================= MOUSE GLOW EFFECT ================= */
+
+const cursor = document.querySelector(".cursor-glow");
+
+
+document.addEventListener("mousemove", (event) => {
+
+    cursor.style.left =
+        event.clientX + "px";
+
+    cursor.style.top =
+        event.clientY + "px";
+
+});
+
+
+
+/* ================= 3D CARD EFFECT ================= */
+
+const tiltCards =
+    document.querySelectorAll(".tilt-card");
+
+
+tiltCards.forEach(card => {
+
+
+    card.addEventListener("mousemove", (event) => {
+
+        const rect =
+            card.getBoundingClientRect();
+
+
+        /* Mouse position inside card */
+
+        const x =
+            (event.clientX - rect.left)
+            / rect.width - 0.5;
+
+
+        const y =
+            (event.clientY - rect.top)
+            / rect.height - 0.5;
+
+
+        /* Rotate card */
+
+        const rotateY =
+            x * 8;
+
+
+        const rotateX =
+            -y * 8;
+
+
+        card.style.transform = `
+
+            perspective(900px)
+
+            rotateY(${rotateY}deg)
+
+            rotateX(${rotateX}deg)
+
+            translateY(-4px)
+
+        `;
+
+    });
+
+
+
+    /* Reset card */
+
+    card.addEventListener("mouseleave", () => {
+
+        card.style.transform = "";
+
+    });
+
+});
+
+
+
+/* ================= ACTIVE NAVIGATION ================= */
+
+const sections =
+    document.querySelectorAll(
+        "main section[id]"
+    );
+
+
+window.addEventListener("scroll", () => {
+
+
+    let currentSection = "";
+
+
+    sections.forEach(section => {
+
+        const sectionTop =
+            section.offsetTop;
+
+
+        if (
+            window.scrollY >=
+            sectionTop - 180
+        ) {
+
+            currentSection =
+                section.getAttribute("id");
+
+        }
+
+    });
+
+
+    navLinks.forEach(link => {
+
+        link.classList.remove("active");
+
+
+        const target =
+            link.getAttribute("href");
+
+
+        if (
+            target ===
+            "#" + currentSection
+        ) {
+
+            link.classList.add("active");
+
+        }
+
+    });
+
+});
+
+
+
+/* ================= SMOOTH NAVIGATION ================= */
+
+navLinks.forEach(link => {
+
+
+    link.addEventListener("click", (event) => {
+
+        event.preventDefault();
+
+
+        const targetId =
+            link.getAttribute("href");
+
+
+        const target =
+            document.querySelector(targetId);
+
+
+        if (target) {
+
+            target.scrollIntoView({
+
+                behavior: "smooth",
+
+                block: "start"
+
+            });
+
+        }
+
+    });
+
+});
+
+
+
+/* ================= PROJECT CARD HOVER ================= */
+
+const projectCard =
+    document.querySelector(".project-card");
+
+
+if (projectCard) {
+
+    projectCard.addEventListener(
+        "mousemove",
+        (event) => {
+
+            const rect =
+                projectCard.getBoundingClientRect();
+
+
+            const x =
+                event.clientX -
+                rect.left;
+
+
+            const y =
+                event.clientY -
+                rect.top;
+
+
+            projectCard.style.setProperty(
+                "--mouse-x",
+                `${x}px`
+            );
+
+
+            projectCard.style.setProperty(
+                "--mouse-y",
+                `${y}px`
+            );
+
+        }
+    );
+
+}
+
+
+
+/* ================= PAGE LOAD ANIMATION ================= */
+
+window.addEventListener(
+    "load",
+    () => {
+
+        document
+            .querySelector(".hero-content")
+            ?.classList.add("visible");
+
+
+        document
+            .querySelector(".hero-card-wrap")
+            ?.classList.add("visible");
+
+    }
+);
+
+
+
+/* ================= CONSOLE MESSAGE ================= */
+
+console.log(
+    "✨ Welcome to Ujwala's Portfolio!"
+);
+
+console.log(
+    "Built with HTML, CSS and JavaScript."
+);
+```
